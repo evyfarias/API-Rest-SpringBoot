@@ -25,5 +25,5 @@ public record DadosCadastroPaciente(
 
         @NotNull
         @Valid
-        DadosEndereco endereco) {
+        DadosEndereco endereco ) {
 }
