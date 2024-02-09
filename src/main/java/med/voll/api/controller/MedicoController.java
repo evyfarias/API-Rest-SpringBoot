@@ -35,7 +35,7 @@ public class MedicoController {
      Para a ordenação ser decrescente, usar o DESC
      http://localhost:8080/medicos?sort=especialidade,desc
 
-     Utilizando todos os parâmetros
+     Utilizando todos os parâmetros de query
       http://localhost:8080/medicos?sort=nome,desc&size=2&page=1
 
       -> Quem controla isto é a Interface Pageable e o retorno Page
@@ -43,7 +43,7 @@ public class MedicoController {
       na URL
     */
     @GetMapping
-    public Page<DadosListagemMedico> listar(@PageableDefault(size = 1, sort = {"nome"}) Pageable paginacao){
+    public Page<DadosListagemMedico> listar(@PageableDefault(size = 3, sort = {"nome"}) Pageable paginacao){
         return repository.findAll(paginacao).map(DadosListagemMedico::new);
     }
 
@@ -53,5 +53,11 @@ public class MedicoController {
         var medico = repository.getReferenceById(dados.id());
         medico.atualizarInformacoes(dados);
 
+    }
+
+    @Transactional
+    @DeleteMapping("/{id}")
+    public void excluir(@PathVariable Long id){
+        repository.deleteById(id);
     }
 }
